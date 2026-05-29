@@ -81,7 +81,11 @@ export async function saveOnboarding(input: OnboardingInput): Promise<SaveOnboar
  * Cookie の発行 (set) は行わない。未発行ユーザーは単に null を返す。
  */
 export async function getMyOnboarding() {
-  const anonId = await readAnonId();
-  if (!anonId) return null;
-  return prisma.onboardingAnswer.findUnique({ where: { anonId } });
+  try {
+    const anonId = await readAnonId();
+    if (!anonId) return null;
+    return await prisma.onboardingAnswer.findUnique({ where: { anonId } });
+  } catch {
+    return null;
+  }
 }
