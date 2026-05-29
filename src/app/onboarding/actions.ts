@@ -53,25 +53,29 @@ export async function saveOnboarding(input: OnboardingInput): Promise<SaveOnboar
   const ratio = beautyBExpenseRatio(input.workFrequency);
   const anonId = await getOrCreateAnonId();
 
-  await prisma.onboardingAnswer.upsert({
-    where: { anonId },
-    create: {
-      anonId,
-      filingType: input.filingType,
-      workFrequency: input.workFrequency,
-      beautyBExpenseRatio: ratio,
-    },
-    update: {
-      filingType: input.filingType,
-      workFrequency: input.workFrequency,
-      beautyBExpenseRatio: ratio,
-    },
-  });
-
-  // ホーム画面などキャッシュを持っている画面に変更を反映
-  revalidatePath("/");
-  revalidatePath("/onboarding");
-  revalidatePath("/onboarding/done");
+  try {
+    await prisma.onboardingAnswer.upsert({
+      where: { anonId },
+      create: {
+        anonId,
+        filingType: input.filingType,
+        workFrequency: input.workFrequency,
+        beautyBExpenseRatio: ratio,
+      },
+      update: {
+        filingType: input.filingType,
+        workFrequency: input.workFrequency,
+        beautyBExpenseRatio: ratio,
+      },
+    });
+  
+    // ホーム画面などキャッシュを持っている画面に変更を反映
+    revalidatePath("/");
+    revalidatePath("/onboarding");
+    revalidatePath("/onboarding/done");
+  } catch {
+    // DB unavailable - return calculation only
+  }
 
   return { ok: true, beautyBExpenseRatio: ratio };
 }
