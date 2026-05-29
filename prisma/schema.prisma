@@ -1,0 +1,25 @@
+// Sparktax (Next.js 版) — オンボーディング保存用の最小スキーマ
+// SQLite を使うので、開発時はローカルに `dev.db` というファイルが自動でできます。
+// 本番で PostgreSQL などに切り替える場合は、provider と DATABASE_URL を変えるだけで OK。
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// オンボーディング回答 1 件 = 1 ユーザー分。
+/// 認証機能は Next.js 化の後続フェーズで追加するため、
+/// 今はクッキーで発行した匿名 ID (`anonId`) をキーにします。
+model OnboardingAnswer {
+  id                  Int      @id @default(autoincrement())
+  anonId              String   @unique
+  filingType          String   // "blue" | "white" | "undecided"
+  workFrequency       String   // "high" | "medium" | "low"
+  beautyBExpenseRatio Float    // 0.0 〜 1.0
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}

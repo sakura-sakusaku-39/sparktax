@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+/**
+ * Tailwind v4 のテーマトークン定義。
+ * - アクセントカラーは #2EC4B6 (ターコイズ)
+ * - 英数字は Lato / 日本語は Noto Sans JP / 装飾ロゴは Cormorant Garamond
+ * - すべての色は CSS 変数経由で参照されるので、ここを書き換えればアプリ全体に反映される
+ */
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #181a1c;
+  --color-muted: #f5f7f8;
+  --color-muted-foreground: #6b7280;
+  --color-card: #ffffff;
+  --color-card-foreground: #181a1c;
+  --color-border: #e5e7eb;
+  --color-input: #f1f3f5;
+
+  --color-primary: #2ec4b6;
+  --color-primary-foreground: #ffffff;
+  --color-primary-soft: #d8f3f0;
+
+  --color-pink: #ff8fa3;
+  --color-pink-soft: #ffe4ea;
+
+  --color-line-green: #06c755;
+  --color-apple-black: #000000;
+
+  --color-destructive: #d24a4a;
+
+  --radius-card: 1rem;
+  --radius-pill: 9999px;
+
+  --font-sans: var(--font-lato), var(--font-noto-jp), "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif;
+  --font-display: var(--font-cormorant), "Times New Roman", serif;
+}
+
+html,
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "palt";
+  -webkit-font-smoothing: antialiased;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+}
+
+/* スマホアプリ風の縦長フレーム。デスクトップでは中央寄せ＋枠線。 */
+.mobile-shell {
+  width: 100%;
+  max-width: 430px;
+  margin-inline: auto;
+  min-height: 100dvh;
+  background: var(--color-background);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .mobile-shell {
+    margin-block: 1.5rem;
+    border-radius: 2rem;
+    overflow: hidden;
+    min-height: calc(100dvh - 3rem);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
+  }
+  body.has-shell {
+    background: #f5f6f7;
+  }
+}
+
+/* ドット背景のサブテクスチャ */
+.dot-bg {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+/* Spark tax ロゴ */
+.brand-logo {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* BottomNav の高さ分の余白を確保するユーティリティ */
+.bottom-nav-safe {
+  padding-bottom: calc(76px + env(safe-area-inset-bottom));
+}
+
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 9999px;
+}

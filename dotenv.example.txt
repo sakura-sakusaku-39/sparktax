@@ -1,0 +1,4 @@
+# このファイルの中身を、プロジェクト直下に「.env」というファイル名でコピーしてください。
+# (ファイル名の先頭がドットなので、ターミナルで `cp dotenv.example.txt .env` と打つと簡単です)
+
+DATABASE_URL="file:./prisma/dev.db"
