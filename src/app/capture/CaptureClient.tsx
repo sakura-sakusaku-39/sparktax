@@ -120,7 +120,7 @@ export function CaptureClient() {
                     className="w-8 h-8 rounded-full flex items-center justify-center text-base"
                     style={{ background: `${cat.color}26` }}
                   >
-                    {cat.emoji}
+                    <img src={cat.icon} alt={cat.label} width={20} height={20} style={{display:"inline-block"}} />
                   </span>
                   <span className="text-[10px] font-medium">{cat.label}</span>
                 </button>
